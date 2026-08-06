@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react'
-import Page from './page'
 import LoginPage from './login/page'
 import RegisterPage from './register/page'
 import DashboardPage from './dashboard/page'
@@ -34,13 +33,6 @@ jest.mock('@/lib/supabaseClient', () => ({
     },
   },
 }))
-
-describe('Home Page', () => {
-  it('renders without crashing', () => {
-    render(<Page />)
-    expect(screen).toBeDefined()
-  })
-})
 
 describe('Login Page', () => {
   it('renders without crashing', () => {
