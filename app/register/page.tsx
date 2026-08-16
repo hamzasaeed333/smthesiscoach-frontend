@@ -52,10 +52,10 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-950 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-navy px-4">
       <form
         onSubmit={handleRegister}
-        className="w-full max-w-md bg-gray-900 rounded-xl p-8 shadow-lg border border-gray-800"
+        className="w-full max-w-md bg-navy/80 rounded-xl p-8 shadow-lg border border-teal/30"
       >
         <h1 className="text-2xl font-bold text-white mb-6">Create Account</h1>
 
@@ -71,7 +71,7 @@ export default function RegisterPage() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="w-full mb-3 px-4 py-2 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-indigo-500"
+          className="w-full mb-3 px-4 py-2 rounded bg-navy/60 text-white border border-teal/30 focus:outline-none focus:border-indigo-500"
         />
 
         <input
@@ -81,7 +81,7 @@ export default function RegisterPage() {
           onChange={(e) => setPassword(e.target.value)}
           required
           minLength={6}
-          className="w-full mb-3 px-4 py-2 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-indigo-500"
+          className="w-full mb-3 px-4 py-2 rounded bg-navy/60 text-white border border-teal/30 focus:outline-none focus:border-indigo-500"
         />
 
         <input
@@ -90,13 +90,13 @@ export default function RegisterPage() {
           value={university}
           onChange={(e) => setUniversity(e.target.value)}
           required
-          className="w-full mb-3 px-4 py-2 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-indigo-500"
+          className="w-full mb-3 px-4 py-2 rounded bg-navy/60 text-white border border-teal/30 focus:outline-none focus:border-indigo-500"
         />
 
         <select
           value={degreeLevel}
           onChange={(e) => setDegreeLevel(e.target.value)}
-          className="w-full mb-3 px-4 py-2 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-indigo-500"
+          className="w-full mb-3 px-4 py-2 rounded bg-navy/60 text-white border border-teal/30 focus:outline-none focus:border-indigo-500"
         >
           <option value="MS">MS</option>
           <option value="MPhil">MPhil</option>
@@ -109,20 +109,20 @@ export default function RegisterPage() {
           value={fieldOfStudy}
           onChange={(e) => setFieldOfStudy(e.target.value)}
           required
-          className="w-full mb-6 px-4 py-2 rounded bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-indigo-500"
+          className="w-full mb-6 px-4 py-2 rounded bg-navy/60 text-white border border-teal/30 focus:outline-none focus:border-indigo-500"
         />
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded font-medium transition disabled:opacity-50"
+          className="w-full bg-teal hover:bg-teal/80 text-white py-2 rounded font-medium transition disabled:opacity-50"
         >
           {loading ? 'Creating account...' : 'Register'}
         </button>
 
-        <p className="text-gray-400 text-sm mt-4 text-center">
+        <p className="text-neutral/70 text-sm mt-4 text-center">
           Already have an account?{' '}
-          <a href="/login" className="text-indigo-400 hover:underline">
+          <a href="/login" className="text-teal hover:underline">
             Login
           </a>
         </p>

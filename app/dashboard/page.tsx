@@ -147,14 +147,14 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-950">
+      <div className="min-h-screen flex items-center justify-center bg-navy">
         <p className="text-white">Loading...</p>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-950 px-6 py-8">
+    <div className="min-h-screen bg-navy px-6 py-8">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
@@ -162,18 +162,18 @@ export default function DashboardPage() {
             <h1 className="text-2xl font-bold text-white">
               Welcome, {profile?.field_of_study} Student
             </h1>
-            <p className="text-gray-400 text-sm mt-1">{profile?.email}</p>
+            <p className="text-neutral/70 text-sm mt-1">{profile?.email}</p>
           </div>
           <button
             onClick={handleLogout}
-            className="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded text-sm transition"
+            className="bg-navy/60 hover:bg-gray-700 text-white px-4 py-2 rounded text-sm transition"
           >
             Logout
           </button>
         </div>
 
         {/* Profile Card */}
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 mb-6">
+        <div className="bg-navy/80 border border-teal/30 rounded-xl p-6 mb-6">
           <h2 className="text-lg font-semibold text-white mb-4">Your Profile</h2>
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
@@ -192,11 +192,11 @@ export default function DashboardPage() {
         </div>
 
         {/* Upload Section */}
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 mb-6">
+        <div className="bg-navy/80 border border-teal/30 rounded-xl p-6 mb-6">
           <h2 className="text-lg font-semibold text-white mb-2">
             Upload Your Thesis Draft
           </h2>
-          <p className="text-gray-400 text-sm mb-4">
+          <p className="text-neutral/70 text-sm mb-4">
             Upload a chapter or full draft (Word/PDF) to get format compliance
             and writing feedback reports.
           </p>
@@ -207,7 +207,7 @@ export default function DashboardPage() {
             </p>
           )}
 
-          <label className="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded font-medium transition cursor-pointer">
+          <label className="inline-block bg-teal hover:bg-teal/80 text-white px-5 py-2 rounded font-medium transition cursor-pointer">
             {uploading ? 'Uploading...' : '+ Upload Document'}
             <input
               type="file"
@@ -220,7 +220,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Documents List */}
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
+        <div className="bg-navy/80 border border-teal/30 rounded-xl p-6">
           <h2 className="text-lg font-semibold text-white mb-4">
             Your Documents
           </h2>
@@ -243,7 +243,7 @@ export default function DashboardPage() {
                 return (
                   <li
                     key={doc.id}
-                    className="bg-gray-800 rounded px-4 py-3 text-sm"
+                    className="bg-navy/60 rounded px-4 py-3 text-sm"
                   >
                     <div className="flex justify-between items-center">
                       <span className="text-white">{doc.file_name}</span>
@@ -254,7 +254,7 @@ export default function DashboardPage() {
                         <button
                           onClick={() => handleAnalyze(doc.id)}
                           disabled={analyzingId === doc.id}
-                          className="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded text-xs font-medium transition disabled:opacity-50"
+                          className="bg-teal hover:bg-teal/80 text-white px-3 py-1 rounded text-xs font-medium transition disabled:opacity-50"
                         >
                           {analyzingId === doc.id ? 'Analyzing...' : 'Analyze'}
                         </button>
@@ -262,13 +262,13 @@ export default function DashboardPage() {
                     </div>
 
                     {report && (
-                      <div className="mt-3 bg-gray-900 rounded p-3 text-xs space-y-2">
+                      <div className="mt-3 bg-navy/80 rounded p-3 text-xs space-y-2">
                         <div className="flex gap-6">
-                          <p className="text-gray-400">
+                          <p className="text-neutral/70">
                             Word count:{' '}
                             <span className="text-white">{report.word_count}</span>
                           </p>
-                          <p className="text-gray-400">
+                          <p className="text-neutral/70">
                             Estimated pages:{' '}
                             <span className="text-white">
                               {report.estimated_pages}
@@ -276,7 +276,7 @@ export default function DashboardPage() {
                           </p>
                         </div>
                         <div>
-                          <p className="text-gray-400 mb-1">
+                          <p className="text-neutral/70 mb-1">
                             Found sections:{' '}
                             <span className="text-green-400">
                               {report.found_headings.length > 0
@@ -284,7 +284,7 @@ export default function DashboardPage() {
                                 : 'None'}
                             </span>
                           </p>
-                          <p className="text-gray-400">
+                          <p className="text-neutral/70">
                             Missing sections:{' '}
                             <span className="text-red-400">
                               {report.missing_headings.length > 0

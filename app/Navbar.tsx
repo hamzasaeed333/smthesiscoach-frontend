@@ -11,7 +11,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="bg-slate-900 border-b border-slate-700 px-6 py-4 flex gap-6">
+    <nav className="bg-navy/80 border-b border-slate-700 px-6 py-4 flex gap-6">
       {links.map((link) => (
         <Link
           key={link.href}
