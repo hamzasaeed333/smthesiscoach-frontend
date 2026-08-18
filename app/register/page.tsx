@@ -6,6 +6,7 @@ import { supabase } from '@/lib/supabaseClient'
 
 export default function RegisterPage() {
   const router = useRouter()
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [university, setUniversity] = useState('')
@@ -34,6 +35,7 @@ export default function RegisterPage() {
       const { error: profileError } = await supabase.from('users').insert({
         id: data.user.id,
         email,
+        name,
         university,
         degree_level: degreeLevel,
         field_of_study: fieldOfStudy,
@@ -64,6 +66,15 @@ export default function RegisterPage() {
             {error}
           </p>
         )}
+
+        <input
+  type="text"
+  placeholder="Full Name"
+  value={name}
+  onChange={(e) => setName(e.target.value)}
+  required
+  className="w-full mb-3 px-4 py-2 rounded bg-navy/60 text-white border border-teal/30 focus:outline-none"
+/>
 
         <input
           type="email"
