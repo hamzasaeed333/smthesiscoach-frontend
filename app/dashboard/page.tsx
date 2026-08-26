@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { supabase } from '@/lib/supabaseClient'
 
 interface UserProfile {
@@ -67,6 +68,30 @@ export default function DashboardPage() {
         .order('created_at', { ascending: false })
 
       setDocuments(docsData || [])
+
+      // Load any existing reports for these documents, so results
+      // persist across page reloads instead of only living in local state.
+      if (docsData && docsData.length > 0) {
+        const docIds = docsData.map((d) => d.id)
+        const { data: reportsData } = await supabase
+          .from('reports')
+          .select('document_id, word_count, estimated_pages, found_headings, missing_headings')
+          .in('document_id', docIds)
+
+        if (reportsData) {
+          const reportsMap: Record<string, Report> = {}
+          reportsData.forEach((r) => {
+            reportsMap[r.document_id] = {
+              word_count: r.word_count,
+              estimated_pages: r.estimated_pages,
+              found_headings: r.found_headings,
+              missing_headings: r.missing_headings,
+            }
+          })
+          setReports(reportsMap)
+        }
+      }
+
       setLoading(false)
     }
 
@@ -240,29 +265,43 @@ export default function DashboardPage() {
             <ul className="space-y-3">
               {documents.map((doc) => {
                 const report = reports[doc.id]
+                const passCount = report ? report.found_headings.length : null
+                const failCount = report ? report.missing_headings.length : null
+
                 return (
                   <li
                     key={doc.id}
                     className="bg-navy/60 rounded px-4 py-3 text-sm"
                   >
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center flex-wrap gap-2">
                       <span className="text-white">{doc.file_name}</span>
                       <div className="flex items-center gap-3">
                         <span className="text-gray-500">
                           {new Date(doc.created_at).toLocaleDateString()}
                         </span>
+                        {report && (
+                          <span className="flex items-center gap-1 text-xs">
+                            <span className="text-green-400">{passCount} passed</span>
+                            <span className="text-gray-600">/</span>
+                            <span className="text-red-400">{failCount} failed</span>
+                          </span>
+                        )}
                         <button
                           onClick={() => handleAnalyze(doc.id)}
                           disabled={analyzingId === doc.id}
                           className="bg-teal hover:bg-teal/80 text-white px-3 py-1 rounded text-xs font-medium transition disabled:opacity-50"
                         >
-                          {analyzingId === doc.id ? 'Analyzing...' : 'Analyze'}
+                          {analyzingId === doc.id
+                            ? 'Analyzing...'
+                            : report
+                            ? 'Re-analyze'
+                            : 'Analyze'}
                         </button>
                       </div>
                     </div>
 
                     {report && (
-                      <div className="mt-3 bg-navy/80 rounded p-3 text-xs space-y-2">
+                      <div className="mt-3 bg-navy/80 rounded p-3 text-xs space-y-3">
                         <div className="flex gap-6">
                           <p className="text-neutral/70">
                             Word count:{' '}
@@ -292,6 +331,22 @@ export default function DashboardPage() {
                                 : 'None'}
                             </span>
                           </p>
+                        </div>
+
+                        {/* Quick actions */}
+                        <div className="flex gap-3 pt-2 border-t border-white/10">
+                          <Link
+                            href={`/compliance-report?documentId=${doc.id}`}
+                            className="text-teal hover:underline text-xs font-medium"
+                          >
+                            View Full Compliance Report →
+                          </Link>
+                          <Link
+                            href="/writing-feedback"
+                            className="text-teal hover:underline text-xs font-medium"
+                          >
+                            View Writing Feedback →
+                          </Link>
                         </div>
                       </div>
                     )}
