@@ -63,14 +63,17 @@ console.log('first bytes:', buffer.slice(0, 10).toString('hex'))
     }
 
     const { error: reportError } = await supabaseAdmin
-      .from('reports')
-      .insert({
-        document_id: documentId,
-        word_count: wordCount,
-        estimated_pages: estimatedPages,
-        found_headings: foundHeadings,
-        missing_headings: missingHeadings,
-      })
+  .from('reports')
+  .upsert(
+    {
+      document_id: documentId,
+      word_count: wordCount,
+      estimated_pages: estimatedPages,
+      found_headings: foundHeadings,
+      missing_headings: missingHeadings,
+    },
+    { onConflict: 'document_id' }
+  )
 
     if (reportError) {
       return NextResponse.json({ error: reportError.message }, { status: 500 })
